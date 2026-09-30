@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVibe - Katalog Game Resmi</title>
+    <!-- Tailwind CSS untuk tampilan modern -->
+    <script src="https://jsdelivr.net"></script>
+    <!-- Supabase CDN JS SDK -->
+    <script src="https://jsdelivr.net"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+
+    <!-- KEPALA HALAMAN (NAVBAR) -->
+    <nav class="bg-gray-800 border-b border-gray-700 p-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-emerald-400">🎮 GameVibe</h1>
+            <div class="flex items-center gap-4">
+                <span class="bg-gray-800 px-3 py-1.5 rounded text-sm">
+                    Kredit: <strong id="kredit-user">Rp 100.000</strong>
+                </span>
+                <button onclick="klaimKredit()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded text-xs font-semibold">
+                    + Isi Kredit Gratis
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- KONTEN UTAMA -->
+    <main class="max-w-6xl mx-auto p-4 mt-6">
+        
+        <!-- Pilihan Navigasi Lobi vs Admin -->
+        <div class="flex gap-2 mb-6">
+            <button onclick="pindahTab('lobi')" id="btn-lobi" class="bg-emerald-500 text-gray-900 px-4 py-2 rounded font-bold text-sm">
+                🏛️ Lobi Pemain
+            </button>
+            <button onclick="pindahTab('admin')" id="btn-admin" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-2 rounded font-bold text-sm">
+                ⚙️ Dashboard Admin
+            </button>
+        </div>
+
+        <!-- ================= Halaman TAB 1: LOBI PEMAIN ================= -->
+        <section id="section-lobi" class="block">
+            <h2 class="text-xl font-bold mb-4 text-gray-300">Daftar Game Resmi & Legal</h2>
+            
+            <!-- Grid Katalog Game -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Game 1 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-lg">
+                    <div class="p-4 bg-emerald-950/40 border-b border-gray-700">
+                        <span class="text-xs uppercase font-bold tracking-wider text-emerald-400">PragmaticPlay</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Gates of Olympus (Simulasi)</h3>
+                        <p class="text-xs text-gray-400 mt-1">Animasi Mitologi Yunani Kuno 3D Imersif.</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-amber-400 font-bold">Rp 35.000</span>
+                            <button onclick="beliGame('Gates of Olympus', 35000)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded font-semibold">
+                                Beli Lisensi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 2 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-lg">
+                    <div class="p-4 bg-pink-950/40 border-b border-gray-700">
+                        <span class="text-xs uppercase font-bold tracking-wider text-pink-400">PG Soft</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Mahjong Ways 2 (Simulasi)</h3>
+                        <p class="text-xs text-gray-400 mt-1">Gaya Klasik Tradisional dengan Suara 2D Dinamis.</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-amber-400 font-bold">Rp 45.000</span>
+                            <button onclick="beliGame('Mahjong Ways 2', 45000)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded font-semibold">
+                                Beli Lisensi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 3 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-lg">
+                    <div class="p-4 bg-amber-950/40 border-b border-gray-700">
+                        <span class="text-xs uppercase font-bold tracking-wider text-amber-400">Habanero</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Koi Gate (Simulasi)</h3>
+                        <p class="text-xs text-gray-400 mt-1">Latar visual kolam koi 4D tenang dengan audio HD.</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-amber-400 font-bold">Rp 25.000</span>
+                            <button onclick="beliGame('Koi Gate', 25000)" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-2 rounded font-semibold">
+                                Beli Lisensi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Halaman TAB 2: DASHBOARD ADMIN ================= -->
+        <section id="section-admin" class="hidden">
+            <h2 class="text-xl font-bold mb-4 text-gray-300">Statistik Admin & Penjualan</h2>
+            
+            <!-- Statistik Ringkas -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                    <p class="text-xs text-gray-400 uppercase">Total Pendapatan Toko</p>
+                    <p id="stat-pendapatan" class="text-2xl font-black text-emerald-400 mt-1">Rp 0</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                    <p class="text-xs text-gray-400 uppercase">Total Lisensi Terjual</p>
+                    <p id="stat-terjual" class="text-2xl font-black text-amber-400 mt-1">0 Pcs</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                    <p class="text-xs text-gray-400 uppercase">Status Integrasi</p>
+                    <p class="text-sm font-semibold text-blue-400 mt-2 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span> Terhubung Supabase
+                    </p>
+                </div>
+            </div>
+
+            <!-- Log Transaksi Terakhir -->
+            <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                <h3 class="text-sm font-bold text-gray-400 mb-3 uppercase">Riwayat Transaksi Pengguna (Real-time)</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b border-gray-700 text-gray-400">
+                                <th class="pb-2">Nama Game</th>
+                                <th class="pb-2">Harga Lisensi</th>
+                                <th class="pb-2">Waktu Pembelian</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-log-transaksi" class="divide-y divide-gray-700/50">
+                            <!-- Data log akan otomatis dimuat di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- LOGIKA SISTEM JAVASCRIPT & SUPABASE -->
+    <script>
+        // Data kredensial Supabase Anda
+        const SUPABASE_URL = "https://supabase.co";
+        const SUPABASE_KEY = "sb_publishable_kDAQeSlMiIBV3DkUmW9e2A_s8tSguYV";
+        
+        // Inisialisasi Klien Supabase
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // State Simulasi Aplikasi Lokal
+        let saldoDompet = 100000;
+        let totalPenjualanToko = 0;
+        let itemTerjualCount = 0;
+
+        // Fungsi Simulasi Klaim Kredit Tambahan
+        function klaimKredit() {
+            saldoDompet += 50000;
+            document.getElementById('kredit-user').innerText = "Rp " + saldoDompet.toLocaleString('id-ID');
+            alert("Berhasil mengklaim kredit simulasi Rp 50.000!");
+        }
+
+        // Fungsi Transaksi Pembelian Lisensi Game
+        async function beliGame(namaGame, harga) {
+            if (saldoDompet < harga) {
+                alert("Kredit simulasi Anda kurang! Silakan klik '+ Isi Kredit Gratis'.");
+                return;
+            }
+
+            saldoDompet -= harga;
+            document.getElementById('kredit-user').innerText = "Rp " + saldoDompet.toLocaleString('id-ID');
+
+            // KIRIM DATA KE DATABASE SUPABASE SECARA REAL-TIME
+            try {
+                const { error } = await supabase
+                    .from('transaksi')
+                    .insert([
+                        { nama_game: namaGame, harga_lisensi: harga }
+                    ]);
+
+                if (error) throw error;
+                
+                alert(`Lisensi untuk "${namaGame}" berhasil dibeli! Data tersimpan di Supabase.`);
+                muatDataDariSupabase(); 
+            } catch (err) {
+                console.error("Gagal sinkronisasi Supabase:", err.message);
+                tambahLogKeTabelLokal(namaGame, harga);
+            }
+        }
+
+        // Fungsi Menampilkan Log di Tabel jika Supabase Belum Terhubung Sempurna
+        function tambahLogKeTabelLokal(nama, harga) {
+            totalPenjualanToko += harga;
+            itemTerjualCount += 1;
